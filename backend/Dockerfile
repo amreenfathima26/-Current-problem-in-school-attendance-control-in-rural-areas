@@ -31,11 +31,14 @@ RUN apt-get update \
 COPY requirements.txt /app/
 
 # Install build tools first with a specific CMake version to avoid policy errors
+# We install them into the system environment so we can use --no-build-isolation
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel "cmake<3.27"
 
 # Install dlib separately with flags to handle the memory and policy issues
-# We set CMAKE_POLICY_DEFAULT_CMP0048=NEW as a fallback
-RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5" pip install --no-cache-dir dlib==19.24.2
+# --no-build-isolation ensures pip uses the cmake version we just installed
+# -vv helps us see exactly what's happening if it fails
+RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5" \
+    pip install --no-cache-dir dlib==19.24.2 --no-build-isolation -vv
 
 # Install the rest of the requirements
 RUN pip install --no-cache-dir -r requirements.txt
