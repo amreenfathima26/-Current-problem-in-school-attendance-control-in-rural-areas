@@ -3,6 +3,8 @@ FROM python:3.10-slim-bullseye
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+ENV MAKEFLAGS="-j1"
 
 # Set work directory
 WORKDIR /app
