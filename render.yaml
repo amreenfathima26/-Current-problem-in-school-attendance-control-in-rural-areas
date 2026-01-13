@@ -19,9 +19,8 @@ services:
       - key: DATABASE_URL
         sync: false
 
-  - type: web
+  - type: static_site
     name: attendance-frontend
-    env: static
     buildCommand: export REACT_APP_API_URL="https://${BACKEND_HOST}/api" && cd frontend/react_app && npm install && npm run build
     staticPublishPath: frontend/react_app/build
     routes:
