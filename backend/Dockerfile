@@ -10,12 +10,19 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        postgresql-dev \
+        postgresql-client \
+        libpq-dev \
         gcc \
         python3-dev \
-        libmysqlclient-dev \
         pkg-config \
         build-essential \
+        cmake \
+        libopenblas-dev \
+        liblapack-dev \
+        libx11-dev \
+        libgtk-3-dev \
+        libgl1-mesa-glx \
+        libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -31,8 +38,12 @@ RUN mkdir -p logs media staticfiles
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Copy entrypoint script
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+
 # Expose port
 EXPOSE 8000
 
-# Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "edurfid.wsgi:application"]
+# Run the entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]
