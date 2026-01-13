@@ -1,4 +1,3 @@
-services:
   - type: web
     name: attendance-backend
     env: python
@@ -22,7 +21,6 @@ services:
   - type: web
     name: attendance-frontend
     env: static
-    plan: free
     buildCommand: export REACT_APP_API_URL="https://${BACKEND_HOST}/api" && cd frontend/react_app && npm install && npm run build
     staticPublishPath: frontend/react_app/build
     routes:
