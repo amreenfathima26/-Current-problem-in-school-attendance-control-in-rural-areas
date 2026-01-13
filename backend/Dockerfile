@@ -36,8 +36,8 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel "cmake<3.27"
 
 # Install dlib separately with flags to handle the memory and policy issues
 # --no-build-isolation ensures pip uses the cmake version we just installed
-# -vv helps us see exactly what's happening if it fails
-RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5" \
+# We disable GUI and CUDA support to drastically reduce memory usage during compilation
+RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDLIB_NO_GUI_SUPPORT=ON -DDLIB_USE_CUDA=OFF -DDLIB_GIF_SUPPORT=OFF" \
     pip install --no-cache-dir dlib==19.24.2 --no-build-isolation -vv
 
 # Install the rest of the requirements
