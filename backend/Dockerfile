@@ -35,9 +35,12 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel "cmake<3.27"
 
 # Install dlib separately with flags to handle the memory and policy issues
+# Install dlib separately with flags to handle the memory and policy issues
 # --no-build-isolation ensures pip uses the cmake version we just installed
-# We disable GUI and CUDA support to drastically reduce memory usage during compilation
-RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDLIB_NO_GUI_SUPPORT=ON -DDLIB_USE_CUDA=OFF -DDLIB_GIF_SUPPORT=OFF" \
+# We disable GUI, CUDA, and AVX/SSE instructions to drastically reduce memory usage
+# We also use -Os to optimize for size, which uses less RAM during compilation
+RUN export CFLAGS="-Os" && export CXXFLAGS="-Os" && \
+    CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDLIB_NO_GUI_SUPPORT=ON -DDLIB_USE_CUDA=OFF -DDLIB_GIF_SUPPORT=OFF -DUSE_AVX_INSTRUCTIONS=OFF -DUSE_SSE2_INSTRUCTIONS=OFF" \
     pip install --no-cache-dir dlib==19.24.2 --no-build-isolation -vv
 
 # Install the rest of the requirements
