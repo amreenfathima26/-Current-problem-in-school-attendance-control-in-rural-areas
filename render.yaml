@@ -19,12 +19,12 @@ services:
       - key: DATABASE_URL
         sync: false
 
-  - type: static
+  - type: web
     name: attendance-frontend
     env: static
     plan: free
     buildCommand: cd frontend/react_app && npm install && npm run build
-    publishDir: frontend/react_app/build
+    staticPublishPath: frontend/react_app/build
     routes:
       - type: rewrite
         source: /*
