@@ -1,0 +1,65 @@
+# EDURFID Backend Requirements - Python 3.13 Compatible
+# Django and core dependencies
+Django==4.2.7
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
+django-cors-headers==4.3.1
+django-filter==23.3
+django-environ==0.11.2
+
+# Database - Using compatible versions for Python 3.13
+PyMySQL==1.1.0
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# API and HTTP
+requests==2.31.0
+urllib3==2.0.7
+
+# Serial communication
+pyserial==3.5
+
+# Report generation
+reportlab==4.0.4
+pandas==2.1.1
+openpyxl==3.1.2
+
+# Authentication and security
+cryptography==41.0.4
+PyJWT==2.8.0
+
+# Utilities
+python-dateutil==2.8.2
+Pillow==10.0.1
+
+# Face Recognition
+face-recognition==1.3.0
+opencv-python==4.8.1.78
+numpy==1.24.3
+dlib==19.24.2
+
+# Development and testing
+pytest==7.4.2
+pytest-django==4.7.0
+pytest-cov==4.1.0
+factory-boy==3.3.0
+
+# Production
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Monitoring and logging
+sentry-sdk[django]==1.38.0
+
+# Environment management
+python-decouple==3.8
+
+# API documentation
+drf-spectacular==0.26.5
+
+# Background tasks (for future use)
+celery==5.3.4
+redis==5.0.1
+
+# Database connection pooling
+sqlalchemy==2.0.21
