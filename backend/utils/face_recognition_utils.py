@@ -4,7 +4,6 @@ Handles face detection, recognition, encoding, and model training.
 """
 import os
 import numpy as np
-import cv2
 from PIL import Image
 from typing import List, Dict, Tuple, Optional, Any
 import logging
