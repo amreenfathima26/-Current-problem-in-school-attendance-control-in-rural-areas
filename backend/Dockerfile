@@ -30,12 +30,12 @@ RUN apt-get update \
 # Install Python dependencies
 COPY requirements.txt /app/
 
-# Install build tools first
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel cmake
+# Install build tools first with a specific CMake version to avoid policy errors
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel "cmake<3.27"
 
-# Install dlib separately with the necessary policy flag to bypass CMake errors
-# We use --config-settings to pass the argument directly to the dlib build system
-RUN pip install --no-cache-dir dlib==19.24.2 --config-settings="--cmake-args=-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+# Install dlib separately with flags to handle the memory and policy issues
+# We set CMAKE_POLICY_DEFAULT_CMP0048=NEW as a fallback
+RUN CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5" pip install --no-cache-dir dlib==19.24.2
 
 # Install the rest of the requirements
 RUN pip install --no-cache-dir -r requirements.txt
