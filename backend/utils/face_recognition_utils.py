@@ -15,15 +15,17 @@ import json
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 
-# Try to import face_recognition, but make it optional
 try:
+    import cv2
     import face_recognition
     FACE_RECOGNITION_AVAILABLE = True
 except ImportError:
+    cv2 = None
+    face_recognition = None
     FACE_RECOGNITION_AVAILABLE = False
-    logging.warning("face_recognition module not available. Face recognition features will be disabled. Install dlib and face_recognition to enable.")
+    logging.warning("cv2 or face_recognition module not available. Face recognition features will be disabled. Install dlib, face_recognition, and opencv-python to enable.")
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('attendance')
 
 
 class FaceRecognitionEngine:

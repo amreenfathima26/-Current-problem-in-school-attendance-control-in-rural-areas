@@ -16,7 +16,9 @@ try:
     import cv2
     print(f"✅ cv2: {cv2.__version__}")
 except ImportError as e:
-    print(f"❌ cv2 failed: {e}")
+    print(f"❌ cv2 failed: {e} (Expected if removed for free tier)")
+except Exception as e:
+     print(f"❌ cv2 failed: {e}")
 
 try:
     import numpy
